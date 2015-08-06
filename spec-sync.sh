@@ -73,7 +73,8 @@ fi
 thirdpart=$1
 version=$2
 
-spec_dir="Specs/$1/$2"
+current=$(current_dir)
+spec_dir="$current/Specs/$1/$2"
 
 mkdir -p $spec_dir
 
@@ -83,9 +84,11 @@ wget -O $1.podspec.json  "https://raw.githubusercontent.com/CocoaPods/Specs/mast
 spopd
 
 info "Push to my repo..."
+spushd $current
 git add .
 git commit -m "add $1 $2"
 git push origin master
+spopd
 
 info "Pod repo update..."
 pod repo update
